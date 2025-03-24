@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
@@ -43,32 +47,43 @@ canvas {
   max-height: 100%;
 }
 
-.score {
+.right-panel {
   position: absolute;
   top: 12px;
   right: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  z-index: 1;
+}
+
+.right-panel > div {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.score {
   font-size: 24px;
   font-weight: bold;
   color: #4CAF50;
   padding: 8px 16px;
-  width: 150px;
   text-align: center;
-  z-index: 1;
   border: 3px solid #4CAF50;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
 }
 
 .controls {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
   flex-shrink: 0;
 }
 
 .controls p {
   color: #888;
   margin: 0 0 12px 0;
+}
+
+.controls button {
+  width: 100%;
 }
 
 button {
@@ -157,15 +172,10 @@ button:active {
 }
 
 .next-food {
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  top: 42px;
-  width: 150px;
-  right: 12px;
-  margin-top: 20px;
   padding: 8px 16px;
   font-size: 18px;
   border: 3px solid #4CAF50;
@@ -187,10 +197,6 @@ button:active {
 }
 
 .player-scores {
-  position: absolute;
-  width: 150px;
-  top: 160px;
-  right: 12px;
   background: rgba(0, 0, 0, 0.2);
   padding: 1rem;
   border-radius: 8px;
