@@ -75,7 +75,7 @@ class SnakeGame {
       this.ws.close();
     }
     
-    this.ws = new WebSocket('ws://localhost:3000');
+    this.ws = new WebSocket(import.meta.env.VITE_WS_HOST);
     
     this.ws.onmessage = (event) => {
       const data = JSON.parse(event.data);

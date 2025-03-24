@@ -2,9 +2,7 @@ import express from 'express';
 import { WebSocket, WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Position, GameState, ClientMessage, Direction } from '../src/types';
-import dotEnv from "dotenv"
-
-dotEnv.config()
+import { config } from "./config";
 
 const app = express();
 const server = createServer(app);
@@ -23,9 +21,9 @@ let globalFood: Position[] = [];
 let globalTargetFood: string = '#FF4136';
 
 // Game configuration
-const GAME_TICK_RATE = 1000 / 60; // 60 FPS for smooth rendering
-const MOVEMENT_INTERVAL = parseInt(process.env.MOVEMENT_INTERVAL);
-const INPUT_RATE_LIMIT = 50; // Minimum time between inputs (ms)
+const GAME_TICK_RATE = 1000 / config.TICK_RATE_FPS;
+const MOVEMENT_INTERVAL = config.MOVEMENT_INTERVAL;
+const INPUT_RATE_LIMIT = config.INPUT_RATE_LIMIT;
 let lastMovementTime = 0;
 
 // Input validation
@@ -302,7 +300,7 @@ wss.on('connection', (ws: WebSocket) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 }); 
