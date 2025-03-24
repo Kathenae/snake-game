@@ -1,5 +1,5 @@
 import './style.css';
-import { Position, GameState } from './types';
+import { Position } from './types';
 
 interface PlayerState {
   id: string;
