@@ -45,7 +45,7 @@ class SnakeGame {
     this.playerScoresList = playerScoresList;
     
     this.gameOverScreen = new GameOverScreen(() => this.startGame());
-    this.gameOverScreen.updateHighScore(parseInt(localStorage.getItem('snakeHighScore') || '0', 10));
+    this.gameOverScreen.updateHighScore(this.getHighscore());
     
     this.startButton.addEventListener('click', () => this.startGame());
     document.addEventListener('keydown', (e) => this.handleKeyDown(e));
@@ -106,6 +106,7 @@ class SnakeGame {
           break;
           
         case 'gameOver':
+          this.endGame();
           this.gameOver(data.score);
           break;
           
@@ -117,7 +118,7 @@ class SnakeGame {
     };
     
     this.ws.onclose = () => {
-      this.gameOver(0);
+      this.endGame()
     };
     
     // Start the game loop for rendering
@@ -176,6 +177,9 @@ class SnakeGame {
       const player = this.players.get(this.playerId);
       if (player) {
         this.scoreElement.textContent = player.score.toString();
+        const highScore = this.getHighscore();
+        this.updateScoreProgress(player.score, highScore);
+
       }
     }
     this.updatePlayerScores();
@@ -202,6 +206,14 @@ class SnakeGame {
       playerElement.appendChild(scoreElement);
       this.playerScoresList.appendChild(playerElement);
     });
+  }
+
+  private updateScoreProgress(score: number, highscore: number) {
+    const scoreProgressBar = document.getElementById("score-progress-bar")
+    if (scoreProgressBar) {
+      const percent =  score / highscore
+      scoreProgressBar.style.width = `${percent * 100}%`
+    }
   }
 
   private draw(): void {
@@ -291,18 +303,21 @@ class SnakeGame {
     }
   }
 
-  private gameOver(score: number): void {
+  private endGame() {
     if (this.gameInterval) {
       window.clearInterval(this.gameInterval);
       this.gameInterval = null;
     }
-    
+
     if (this.ws) {
       this.ws.close();
       this.ws = null;
     }
+  }
+
+  private gameOver(score: number): void {
     
-    const highScore = parseInt(localStorage.getItem('snakeHighScore') || '0', 10);
+    const highScore = this.getHighscore();
     if (score > highScore) {
       localStorage.setItem('snakeHighScore', score.toString());
       this.gameOverScreen.updateHighScore(score);
@@ -318,6 +333,10 @@ class SnakeGame {
     if (nextFoodColorElement) {
       nextFoodColorElement.style.backgroundColor = this.targetFood;
     }
+  }
+
+  getHighscore(): number {
+    return parseInt(localStorage.getItem('snakeHighScore') || '0', 10);
   }
 }
 
@@ -359,6 +378,7 @@ class GameOverScreen {
   }
 
   updateScore(score: number): void {
+    console.log(score)
     this.finalScoreElement.textContent = score.toString();
   }
 

@@ -13,6 +13,11 @@ body {
   overflow: hidden;
 }
 
+.neon-green {
+  border: 3px solid #4CAF50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
 .container {
   flex: 1;
   display: flex;
@@ -230,4 +235,32 @@ button:active {
 .player-score-item.current-player {
   background: rgba(255, 255, 255, 0.2);
   font-weight: bold;
+}
+
+.score-progress {
+  position: absolute;
+  bottom: 12px;
+  left: 0px;
+  width: 100%;
+  padding: 0px 200px;
+  pointer-events: none;
+}
+
+.score-progress .bar-shell {
+  border-radius: 6px;
+  position: relative;
+  background-color: transparent;
+  height: 18px;
+  width: 100%;
+}
+
+.score-progress .bar {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #ffd700;
+  box-shadow: 0 0 20px #ffd90079;
+  transition: width ease-in 200ms;
 }
