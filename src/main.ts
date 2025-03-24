@@ -240,6 +240,18 @@ class SnakeGame {
           this.gridSize - 2,
           this.gridSize - 2
         );
+
+        // Only draw stroke for player's own snake
+        if (player.id === this.playerId) {
+          this.ctx.strokeStyle = "#fff";
+          this.ctx.lineWidth = 2;
+          this.ctx.strokeRect(
+            segment.x * this.gridSize + 1,
+            segment.y * this.gridSize + 1,
+            this.gridSize - 2,
+            this.gridSize - 2
+          );
+        }
       }
       
       // Draw snake head
