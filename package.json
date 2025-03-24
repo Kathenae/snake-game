@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "server": "tsx server/server.ts",
-    "dev:server": "nodemon --watch server --exec tsx server/server.ts",
+    "dev:server": "nodemon --watch server --watch .env --exec tsx server/server.ts",
     "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"blue,green\" \"npm run dev:frontend\" \"npm run dev:server\""
   },
   "devDependencies": {
