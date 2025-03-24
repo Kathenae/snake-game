@@ -23,7 +23,6 @@ let globalTargetFood: string = '#FF4136';
 
 // Game configuration
 const GAME_TICK_RATE = 1000 / config.TICK_RATE_FPS;
-const MOVEMENT_INTERVAL = config.MOVEMENT_INTERVAL;
 const INPUT_RATE_LIMIT = config.INPUT_RATE_LIMIT;
 let lastMovementTime = 0;
 
@@ -123,7 +122,7 @@ function gameLoop() {
   }
   
   // Only update positions if enough time has passed
-  if (currentTime - lastMovementTime >= MOVEMENT_INTERVAL) {
+  if (currentTime - lastMovementTime >= GAME_TICK_RATE) {
     lastMovementTime = currentTime;
     
     for (const [playerId, player] of players) {
