@@ -6,6 +6,8 @@ export interface Position {
 
 export interface GameState {
   snake: Position[];
+  snakeColors: string[];
+  targetFood: string,
   food: Position[];
   score: number;
   dx: number;

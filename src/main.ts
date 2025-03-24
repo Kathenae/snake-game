@@ -76,6 +76,8 @@ class SnakeGame {
     
     this.gameState = {
       snake: [],
+      snakeColors: [],
+      targetFood: '#FF4136',
       food: [],
       score: 0,
       dx: 0,
@@ -112,6 +114,8 @@ class SnakeGame {
   private startGame(): void {
     this.gameState = {
       snake: [{ x: 10, y: 10 }],
+      snakeColors: ['#4CAF50'],
+      targetFood: '#FF4136',
       food: [],
       score: 0,
       dx: 1,
@@ -121,6 +125,7 @@ class SnakeGame {
     
     this.scoreElement.textContent = this.gameState.score.toString();
     this.generateFood(10);
+    this.updateTargetFood();
     
     if (this.gameInterval) {
       window.clearInterval(this.gameInterval);
@@ -206,13 +211,23 @@ class SnakeGame {
       const food = this.gameState.food[i];
       // Check food collision
       if (head.x === food.x && head.y === food.y) {
-        this.gameState.score += 10;
-        this.scoreElement.textContent = this.gameState.score.toString();
         this.gameState.food = this.gameState.food.filter(f => !(f.x == food.x && f.y == food.y))
-        if(Math.random() > 0.4) {
-          this.generateFood(1 + Math.floor(Math.random() * 2));
+
+        if(food.color == this.gameState.targetFood) {
+          this.gameState.score += 10;
+          this.scoreElement.textContent = this.gameState.score.toString();
+          if(Math.random() > 0.2) {
+            this.generateFood(1 + Math.floor(Math.random() * 2));
+          }
+          this.gameState.snakeColors.push(food.color!)
+          pop = false
+          this.updateTargetFood()
+        } else if (this.gameState.snake.length > 2){
+          this.gameState.snake.pop()
+          this.gameState.snakeColors.pop()
+          this.gameState.score -= 10;
+          this.scoreElement.textContent = this.gameState.score.toString();
         }
-        pop = false
       }
     }
 
@@ -246,8 +261,11 @@ class SnakeGame {
     }
     
     // Draw snake
-    this.ctx.fillStyle = '#4CAF50';
-    for (const segment of this.gameState.snake) {
+    for (let i = 0; i < this.gameState.snake.length; i++) {
+      const segment = this.gameState.snake[i];
+      const color = this.gameState.snakeColors[i]; // Get color for the segment
+      this.ctx.fillStyle = color;
+  
       this.ctx.fillRect(
         segment.x * this.gridSize + 1,
         segment.y * this.gridSize + 1,
@@ -295,6 +313,12 @@ class SnakeGame {
     this.gameOverScreen.updateScore(this.gameState.score);
     this.gameOverScreen.show();
     this.startButton.textContent = 'Start Game';
+  }
+
+  private updateTargetFood(): void {
+    this.gameState.targetFood = this.gameState.food[Math.floor(Math.random() * this.gameState.food.length)].color!
+    const nextFoodColorElement = document.getElementById('nextFoodColor') as HTMLElement;
+    nextFoodColorElement.style.backgroundColor = this.gameState.targetFood;
   }
 }
 
