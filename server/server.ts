@@ -21,7 +21,7 @@ let globalTargetFood: string = '#FF4136';
 
 // Game configuration
 const GAME_TICK_RATE = 1000 / 60; // 60 FPS for smooth rendering
-const MOVEMENT_INTERVAL = 600; // Move every 200ms (5 times per second)
+const MOVEMENT_INTERVAL = 200; // Move every 200ms (5 times per second)
 const INPUT_RATE_LIMIT = 50; // Minimum time between inputs (ms)
 let lastMovementTime = 0;
 
