@@ -17,6 +17,7 @@ interface Player {
 
 const players = new Map<string, Player>();
 const colors = ['#4CAF50', '#FF4136', '#0074D9', '#FFDC00', '#B10DC9'];
+const globalTileCount: number = config.TILE_COUNT
 let globalFood: Position[] = [];
 let globalTargetFood: string = '#FF4136';
 
@@ -82,7 +83,7 @@ function generateFood(count: number, tileCount: number): Position[] {
 
 function createInitialGameState(): GameState {
   return {
-    snake: [{ x: 10, y: 10 }],
+    snake: [{ x: 0, y: 0 }],
     snakeColors: ['#4CAF50'],
     targetFood: globalTargetFood,
     food: globalFood,
@@ -113,7 +114,7 @@ function broadcastGameState() {
 
 function gameLoop() {
   const currentTime = Date.now();
-  const tileCount = 40;
+  const tileCount = globalTileCount;
   
   // Generate initial food if none exists
   if (globalFood.length === 0) {
@@ -222,6 +223,7 @@ wss.on('connection', (ws: WebSocket) => {
   ws.send(JSON.stringify({
     type: 'init',
     playerId,
+    tileCount: globalTileCount,
     gameState: player.gameState
   }));
   

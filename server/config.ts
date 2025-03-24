@@ -6,6 +6,7 @@ dotenv.config(); // Load .env file into process.env
 
 const envSchema = z.object({
     PORT: z.coerce.number().default(3000),
+    TILE_COUNT: z.coerce.number().default(30),
     MOVEMENT_INTERVAL: z.coerce.number().default(200),
     INPUT_RATE_LIMIT: z.coerce.number().default(50),
     TICK_RATE_FPS: z.coerce.number().default(30),

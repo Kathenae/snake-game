@@ -83,6 +83,8 @@ class SnakeGame {
       switch (data.type) {
         case 'init':
           this.playerId = data.playerId;
+          this.tileCount = data.tileCount;
+          this.handleResize();
           this.players.set(data.playerId, {
             id: data.playerId,
             snake: data.gameState.snake,
