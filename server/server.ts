@@ -2,6 +2,9 @@ import express from 'express';
 import { WebSocket, WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Position, GameState, ClientMessage, Direction } from '../src/types';
+import dotEnv from "dotenv"
+
+dotEnv.config()
 
 const app = express();
 const server = createServer(app);
@@ -21,7 +24,7 @@ let globalTargetFood: string = '#FF4136';
 
 // Game configuration
 const GAME_TICK_RATE = 1000 / 60; // 60 FPS for smooth rendering
-const MOVEMENT_INTERVAL = 200; // Move every 200ms (5 times per second)
+const MOVEMENT_INTERVAL = parseInt(process.env.MOVEMENT_INTERVAL);
 const INPUT_RATE_LIMIT = 50; // Minimum time between inputs (ms)
 let lastMovementTime = 0;
 
