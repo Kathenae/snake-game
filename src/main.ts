@@ -136,7 +136,7 @@ class SnakeGame {
   }
 
   private generateFood(count: number): void {
-    const colors = ['#FF4136', '#FFDC00', '#0074D9', '#2ECC40', '#B10DC9'];
+    const colors = ['#FF4136', '#FFDC00', '#0074D9'];
     
     for (let i = 0; i < count; i++) {
       const newFood: Position = {
@@ -276,7 +276,7 @@ class SnakeGame {
     
     // Draw snake head with different color
     if (this.gameState.snake.length > 0) {
-      this.ctx.fillStyle = '#45a049';
+      this.ctx.fillStyle = this.gameState.targetFood;
       const head = this.gameState.snake[0];
       this.ctx.fillRect(
         head.x * this.gridSize + 1,
@@ -284,6 +284,14 @@ class SnakeGame {
         this.gridSize - 2,
         this.gridSize - 2
       );
+      this.ctx.strokeStyle = "#fff"
+      this.ctx.lineWidth = 2;
+      this.ctx.strokeRect(
+        head.x * this.gridSize + 1,
+        head.y * this.gridSize + 1,
+        this.gridSize - 2,
+        this.gridSize - 2
+      )
     }
     
     // Draw food
